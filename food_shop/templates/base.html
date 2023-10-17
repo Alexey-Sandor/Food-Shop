@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <html lang="ru">
+    {%load static%}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title> {% block title %} {% endblock %} </title>
+  </head>
+ <body>
+    {% include 'includes/header.html' %}
+    {% include 'includes/left_panel.html' %}
+    {% block content %} {% endblock %}
+ </body>
+</html>

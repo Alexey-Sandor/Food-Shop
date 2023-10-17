@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/order_create.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script>
+$(document).ready(function() {
+
+  $('#id_use_bonuses').on('change', function() {
+    if ($(this).prop('checked')) {
+      $('.slider-container').show();
+      $('#bonuses-used-info').show();
+    } else {
+      $('.slider-container').hide();
+      $('#bonuses-used-info').hide();
+    }
+    calculateTotalPrice();
+  });
+
+  $('#id_bonuses_was_used').on('input', function() {
+    calculateTotalPrice();
+  });
+
+  function calculateTotalPrice() {
+    var bonusesUsedPercent = 0;
+    if ($('#id_use_bonuses').prop('checked')) {
+      bonusesUsedPercent = parseInt($('#id_bonuses_was_used').val());
+    }
+    var total_price = parseInt('{{ total_price }}');
+    var maxBonusesPercent = Math.min(70, Math.floor({{ bonuses_count }} / total_price * 100));
+    var bonusesUsed = Math.min(Math.floor(total_price * bonusesUsedPercent / 100), Math.floor({{ bonuses_count }}));
+    $('#id_bonuses_was_used').attr('max', maxBonusesPercent);
+    $('#bonus-value').text(bonusesUsedPercent + '%');
+
+    var bonusesUsedInfo = 'Задействовано бонусов: ' + bonusesUsed + ' руб.';
+    $('#bonuses-used-info').text(bonusesUsedPercent > 0 ? bonusesUsedInfo : '');
+    var totalPriceWithBonuses = total_price - bonusesUsed;
+    $('#total_price').text(totalPriceWithBonuses.toFixed(2) + ' руб.');
+    $('#bonuses-used-hidden').val(bonusesUsed);
+  }
+
+
+  calculateTotalPrice();
+
+
+  $('form').on('submit', function(e) {
+
+    calculateTotalPrice();
+
+    return true;
+  });
+
+  // Добавляем вывод общего количества бонусов у пользователя
+  $('#id_use_bonuses').on('change', function() {
+    if ($(this).prop('checked')) {
+      var totalBonuses = parseInt('{{ bonuses_count }}');
+      $('#user-bonuses-count-info').text('Ваше общее количество бонусов: ' + totalBonuses + ' руб.').show();
+    } else {
+      $('#user-bonuses-count-info').hide();
+    }
+  });
+});
+</script>
+<div class="margin_block">
+  <div class="container">
+    <div class="left-block">
+      <form method="post">
+        {% csrf_token %}
+        <br>{{form.client_name.label}}
+        <br>{{form.client_name}}
+        <br>{{form.client_phone_number.label}}
+        <br>{{form.client_phone_number}}
+        <br>{{ form.client_address.label }}
+        <br>{{ form.client_address }}
+        <a href = {% url 'users:add-address'%}> Добавить адрес </a>
+        <br>{% if bonuses_count > 0 %}
+        <br><label for="id_use_bonuses">Использовать бонусы?</label>
+        <input type="checkbox" id="id_use_bonuses">  
+        <div class="slider-container" style="display: none;">  
+          <input type="range" min="0" max="100" step="1" id="id_bonuses_was_used" value="0"> 
+          <span id="bonus-value">0%</span>  
+        </div>
+        {% endif %}
+        <br><button type="submit" class="button">Оформить заказ</button>
+        <input type="hidden" name="bonuses_was_used" id="bonuses-used-hidden">
+      </form>
+    </div>
+    <div class="right-block">
+      Выводим тут например инфу о товарах в которые сейчас в корзине
+      <br> <span id="user-bonuses-count-info" style="display: none;"></span> 
+      <br> <span id="bonuses-used-info" style="display: none;"></span>  
+      <br> Итоговая цена заказа: <span id="total_price">{{ total_price }} руб.</span>
+    </div>
+  </div>
+</div>
+{% endblock %}

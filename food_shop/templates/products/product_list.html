@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/product_list.css' %}">
+<div class="center_page">
+    <div class="product-container">
+    {% for product in products %}
+    <div class="product">
+        <div class="product-image">
+        <img src="{{ product.image.url}}">
+        </div>
+        <div class="product-name">
+        {{ product.name }}
+        </div>
+        <div class="product-description">
+        {% if product.description|length > 90 %}
+            {{ product.description|slice:":90" }}...
+        {% else %}
+            {{ product.description }}
+        {% endif %}
+        </div>
+        <div class="product-price">
+          Вес: {{product.weight}} г.
+          <br> Цена: {{ product.price }} руб.
+        </div>
+        <a class="product-details-link" href="{{ product.get_absolute_url }}"> Подробнее </a>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

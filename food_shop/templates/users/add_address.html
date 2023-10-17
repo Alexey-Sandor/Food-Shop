@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/add_address.css' %}">
+
+<form method="post">
+    {% csrf_token %}
+    <label for="id_city">Город:</label>
+    <input type="text" name="city" id="id_city">
+
+    <label for="id_street">Улица:</label>
+    <input type="text" name="street" id="id_street">
+
+    <label for="id_house_number">Дом:</label>
+    <input type="text" name="house_number" id="id_house_number">
+
+    <label for="id_apartment_number">Квартира:</label>
+    <input type="text" name="apartment_number" id="id_apartment_number">
+
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

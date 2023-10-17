@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/order_success_created.css' %}">
+<div class="center">
+  Заказ успешно оформлен
+  <br><a class="links" href = {% url 'products:home'%}> Главная </a>
+  <a class="links" href = {% url 'products:cart'%}> Корзина </a>
+</div>
+
+{% endblock %}

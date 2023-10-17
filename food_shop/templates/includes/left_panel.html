@@ -1,0 +1,9 @@
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/left_panel.css' %}">
+
+<div class="sidenav">
+  <a href= {% url 'products:product-list' category='pizza' %}>Пицца</a>
+  <a href= {% url 'products:product-list' category='roll' %}>Суши</a>
+  <a href= {% url 'products:product-list' category='burger' %}>Бургеры</a>
+</div>
+  

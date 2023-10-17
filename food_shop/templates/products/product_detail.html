@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/product_detail.css' %}">
+<div class="center_page">
+  <h1 class="category_name"> {{ category }} </h1>
+    <div class="product-image">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="300" height="300">
+    </div>
+    <div class="product-name">
+    {{ product.name }}
+    </div>
+    <div class="product-description">
+        {{ product.description }}
+    </div>
+    <div class="product-price">
+        Вес: {{product.weight}} г.
+        <br> Цена: {{ product.price }} руб.
+    </div>
+    <a class="add_to_cart" href={% url 'products:add_to_cart' product.slug %}> добавить в корзину</a>
+    <a class="product-details-link" href="javascript:history.back()"> Вернуться назад </a>
+</div>
+{% endblock %}
+
+

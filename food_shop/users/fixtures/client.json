@@ -1,0 +1,16 @@
+[
+    {
+      "model": "users.Client", 
+      "pk": 1,
+      "fields": {
+        "phone_number": "+79780000000"
+      }
+    },
+    {
+      "model": "users.Client", 
+      "pk": 2,
+      "fields": {
+        "phone_number": "+79780000001"
+      }
+    }
+  ]

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+<head>
+    <title>Cart</title>
+</head>
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <h1>Корзина</h1>
+    <div class="product-container">
+        {% if cart %}
+            {% for product_slug, product in cart %}
+                <div class="product">
+                    <img src="{{ product.image }}">
+                    <h2>{{ product.name }}</h2>
+                    <p> Цена: {{ product.price }}</p>
+                    <p> Вес: {{ product.weight }}</p>
+                    <p> Количество: {{product.count}} </p>
+                      <a class="no_decor" href="{% url 'products:increase-count' product_slug %}"> Больше </a>
+                      <a class="no_decor" href="{% url 'products:decrease-count' product_slug %}"> Меньше </a>
+                </div>
+            {% endfor %}
+        </div>
+        <a class="buttons" href="{% url 'products:create-order' %}"> Оформить заказ</a> 
+        <a class="buttons" href="{% url 'products:cart-clear' %}"> Очистить корзину</a> 
+        {% else %}
+            <p class="cart_empty">Ваша корзина пустая</p>
+        {% endif %}
+{% endblock %}
+</html>

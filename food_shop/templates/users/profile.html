@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+<head>
+    <title>Авторизация</title>
+</head>
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+<div class="center">
+    <br> Общая сумма заказов: {{object.orders_price_amount}} руб.
+    <br> Ваше количество бонусов: {{object.bonuses_amount}}
+    <br> Вы можете оплатить бонусами до 70% заказа.
+    <br> Чем больше общая сумма заказов, тем больше бонусов вы получаете при оформлении заказов
+    <br> Выводить тут ещё какую-то инфу при необходимости
+    <br> <a href = {% url 'users:profile-edit'%}> Добавить информацию о себе </a>
+</div>
+{% endblock content %}

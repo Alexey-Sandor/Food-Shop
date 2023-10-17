@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}
+  Авторизация 
+{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/enter_phone_number.css' %}">
+<div class="center_page">
+  <div class="wrapper">
+    <b class="entry"> Вход </b>
+    <div class="info_text">
+      Введите номер телефона, и мы отправим на него
+      <br> SMS с кодом для входа
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form">
+        {{ form.phone_number }}
+        {% if form.phone_number.errors %}
+        <div class="error">
+          {{ form.phone_number.errors }}
+        </div>
+        {% endif %}
+      </div>
+      <button type="submit" class="button">Получить код</button>
+    </form>
+    Продолжая, Вы соглашаетесь с условиями
+    <br><a class="hidden_decoration" href="{% url 'users:privacy-policy' %}" target="_blank"> Политики обработки персональных данных </a> 
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var phoneInput = document.getElementById('id_phone_number');
+  
+  phoneInput.addEventListener('input', function() {
+    if (!phoneInput.value.startsWith('+')) {
+      phoneInput.value = '+' + phoneInput.value;
+    }
+  });
+});
+</script>
+{% endblock %}

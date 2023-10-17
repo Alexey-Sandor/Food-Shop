@@ -1,0 +1,16 @@
+[
+    {
+      "model": "products.Product", 
+      "pk": 1,
+      "fields": {
+        "name": "Ролл Филадельфия",
+        "description": "Описание",
+        "weight": 250,
+        "price": 500,
+        "image": "test_product.png",
+        "category": "roll",
+        "slug": "Roll-Filadelfia",
+        "available": "True"
+      }
+    }
+  ]

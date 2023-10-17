@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+  Авторизация 
+{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/enter_code.css' %}">
+<div class="center_page">
+  <div class="wrapper">
+    <b class="entry"> Вход </b>
+    <div class="info_text">
+      Мы отправили код в SMS на {{phone_number}}
+      <br> <a class="back" href="{% url "users:login" %}">Изменить номер </a>
+    </div>
+    <form method="post" id="code-form">
+      {% csrf_token %}
+      <div class="form">
+        {{ form.code }}
+      </div>
+      <button type="button" class="resend_code" id="resend-code"> Получить новый код </button>
+      <div id="error-container" class="error-container">
+        {% if form.errors.code %}
+          {{ form.errors.code }}
+        {% endif %}
+      </div>
+      <button type="submit" class="button">Войти</button>
+    </form>
+    Продолжая, Вы соглашаетесь с условиями
+    <br><a class="hidden_decoration" href="{% url 'users:privacy-policy' %}" target="_blank"> Политики обработки персональных данных </a> 
+  </div>
+</div>
+
+<script>
+  document.getElementById('resend-code').addEventListener('click', function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{% url "users:resend_code" %}');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log('AJAX-запрос успешно завершен');
+        document.getElementById('code-form').reset();
+        document.getElementById('id_code').value = '';  // Сбросить значение поля ввода
+      }
+    };
+
+    xhr.send();
+
+    // Дополнительно очистим поле ошибок, если они были видимы
+    var errorContainer = document.getElementById('error-container');
+    errorContainer.innerHTML = '';
+  });
+</script>
+
+{% endblock %}

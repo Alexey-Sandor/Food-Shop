@@ -1,0 +1,12 @@
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+  <header class="header">
+    <a class="a__logo" href = "/"> FOOD SHOP </a> 
+    <a class="a__cart_login" href = {% url 'products:cart'%}> корзина </a>
+    {% if user.is_authenticated %}
+      <a class="a__cart_login" href = {% url 'users:logout'%}> Выйти </a> 
+    {% else %}
+      <a class="a__cart_login" href = {% url 'users:login'%}> Войти </a>
+    {% endif %}
+  </header>
+

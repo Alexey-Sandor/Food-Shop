@@ -1,0 +1,23 @@
+[
+    {
+      "model": "users.Address", 
+      "pk": 1,
+      "fields": {
+        "profile": 1,
+        "city": "Москва",
+        "street": "Пушкина",
+        "house_number": "13"
+      }
+    },
+    {
+        "model": "users.Address", 
+        "pk": 2,
+        "fields": {
+            "profile": 1,
+            "city": "Москва",
+            "street": "Пушкина",
+            "house_number": "13",
+            "apartment_number": "120"
+          }
+      }
+  ]

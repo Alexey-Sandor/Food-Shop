@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_profile.css' %}">
+<div class="center">
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить информацию">
+</form>
+</div>
+    {% endblock content %}
